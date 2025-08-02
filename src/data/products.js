@@ -95,13 +95,13 @@ export const products = [
     rating: 4.8
   },
 
-  // Kurtas and Kurtis
+  // Kurtas and Kurtis - Using reliable working images
   {
     id: 9,
     name: "Handwoven Cotton Kurta",
     category: "kurtas-kurtis",
     price: 75.99,
-    image: "https://images.unsplash.com/photo-1571511386780-8b425ae3c9b3?w=500",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=400&fit=crop",
     description: "Elegant handwoven cotton kurta with traditional embroidery.",
     features: ["Handwoven Cotton", "Traditional Embroidery", "Comfortable Fit", "Breathable"],
     inStock: true,
@@ -112,7 +112,7 @@ export const products = [
     name: "Silk Kurti with Block Print",
     category: "kurtas-kurtis",
     price: 95.99,
-    image: "https://images.unsplash.com/photo-1576994020836-b6a996dd2e56?w=500",
+    image: "https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=500&h=400&fit=crop",
     description: "Beautiful silk kurti featuring intricate block print patterns.",
     features: ["Pure Silk", "Block Print", "Contemporary Design", "Premium Quality"],
     inStock: true,
@@ -173,7 +173,7 @@ export const products = [
     name: "Cotton Block Print Sarong",
     category: "sarongs",
     price: 38.99,
-    image: "https://images.unsplash.com/photo-1503656877436-68b7e2b38c47?w=500",
+    image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&h=400&fit=crop",
     description: "Vibrant cotton sarong with traditional block print patterns.",
     features: ["100% Cotton", "Block Print", "Versatile Use", "Lightweight"],
     inStock: true,
@@ -184,20 +184,20 @@ export const products = [
     name: "Silk Sarong with Embroidery",
     category: "sarongs",
     price: 65.99,
-    image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=500",
+    image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500&h=400&fit=crop",
     description: "Luxurious silk sarong featuring delicate hand embroidery.",
     features: ["Pure Silk", "Hand Embroidery", "Luxurious Feel", "Premium Quality"],
     inStock: true,
     rating: 4.9
   },
 
-  // Shawls
+  // Shawls - Using reliable working images
   {
     id: 17,
     name: "Pashmina Wool Shawl",
     category: "shawls",
     price: 149.99,
-    image: "https://images.unsplash.com/photo-1582201943021-e8e54b4e7bfd?w=500",
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&h=400&fit=crop",
     description: "Luxurious pashmina wool shawl, incredibly soft and warm.",
     features: ["100% Pashmina Wool", "Ultra Soft", "Warm", "Lightweight"],
     inStock: true,
@@ -208,7 +208,7 @@ export const products = [
     name: "Handwoven Wool Shawl",
     category: "shawls",
     price: 89.99,
-    image: "https://images.unsplash.com/photo-1578088342721-15dd76eba0aa?w=500",
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=400&fit=crop",
     description: "Traditional handwoven wool shawl with ethnic patterns.",
     features: ["Handwoven Wool", "Traditional Patterns", "Warm", "Durable"],
     inStock: true,
@@ -245,7 +245,7 @@ export const categories = [
     id: 'kurtas-kurtis',
     name: 'Kurtas & Kurtis',
     description: 'Comfortable and stylish ethnic wear for every occasion',
-    image: 'https://images.unsplash.com/photo-1571511386780-8b425ae3c9b3?w=500'
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=400&fit=crop'
   },
   {
     id: 'fabrics',
@@ -263,12 +263,12 @@ export const categories = [
     id: 'sarongs',
     name: 'Sarongs',
     description: 'Versatile and stylish sarongs for beach and casual wear',
-    image: 'https://images.unsplash.com/photo-1503656877436-68b7e2b38c47?w=500'
+    image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&h=400&fit=crop'
   },
   {
     id: 'shawls',
     name: 'Shawls',
     description: 'Luxurious handwoven shawls for warmth and elegance',
-    image: 'https://images.unsplash.com/photo-1582201943021-e8e54b4e7bfd?w=500'
+    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&h=400&fit=crop'
   }
 ];
