@@ -1,158 +1,274 @@
 export const products = [
+  // Cosmetic Bags
   {
     id: 1,
-    name: "Handwoven Silk Tapestry",
-    description: "Exquisite silk tapestry featuring traditional patterns, handwoven by master artisans using centuries-old techniques.",
-    price: 899.99,
-    originalPrice: 1199.99,
-    images: [
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop",
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop&sat=20"
-    ],
-    category: "Textiles",
-    artist: {
-      id: 1,
-      name: "Maria Rodriguez",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b619?w=100&h=100&fit=crop&crop=face"
-    },
-    tags: ["handwoven", "silk", "traditional", "wall-art"],
+    name: "Handwoven Jute Cosmetic Bag",
+    category: "cosmetic-bags",
+    price: 25.99,
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500",
+    description: "Beautiful handwoven jute cosmetic bag with traditional patterns. Perfect for organizing your beauty essentials.",
+    features: ["100% Natural Jute", "Handwoven", "Traditional Patterns", "Eco-friendly"],
     inStock: true,
-    featured: true,
-    rating: 4.8,
-    reviews: 23,
-    materials: ["100% Silk", "Natural Dyes"],
-    dimensions: "36\" x 24\"",
-    weight: "2.5 lbs"
+    rating: 4.8
   },
   {
     id: 2,
-    name: "Ceramic Pottery Set",
-    description: "Beautiful handcrafted ceramic pottery set including bowls, plates, and mugs. Perfect for everyday use or special occasions.",
-    price: 249.99,
-    originalPrice: 299.99,
-    images: [
-      "https://images.unsplash.com/photo-1578749556568-bc2c40e68629?w=500&h=500&fit=crop",
-      "https://images.unsplash.com/photo-1578749556568-bc2c40e68629?w=500&h=500&fit=crop&sat=20"
-    ],
-    category: "Ceramics",
-    artist: {
-      id: 2,
-      name: "James Chen",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
-    },
-    tags: ["ceramic", "handmade", "dinnerware", "artisan"],
+    name: "Cotton Block Print Cosmetic Pouch",
+    category: "cosmetic-bags",
+    price: 18.99,
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500",
+    description: "Elegant cotton cosmetic pouch with intricate block print designs.",
+    features: ["100% Cotton", "Block Print", "Zipper Closure", "Multiple Compartments"],
     inStock: true,
-    featured: true,
-    rating: 4.9,
-    reviews: 41,
-    materials: ["High-fire Ceramic", "Food-safe Glaze"],
-    dimensions: "Various sizes",
-    weight: "8 lbs"
+    rating: 4.6
   },
+
+  // Makeup Bags
   {
     id: 3,
-    name: "Wooden Sculpture Art",
-    description: "Intricate wooden sculpture carved from sustainable hardwood. A unique piece that brings natural beauty to any space.",
-    price: 1299.99,
-    images: [
-      "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=500&h=500&fit=crop",
-      "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=500&h=500&fit=crop&contrast=20"
-    ],
-    category: "Sculptures",
-    artist: {
-      id: 3,
-      name: "Sarah Thompson",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
-    },
-    tags: ["wood", "sculpture", "handcarved", "sustainable"],
+    name: "Silk Embroidered Makeup Bag",
+    category: "makeup-bags",
+    price: 45.99,
+    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500",
+    description: "Luxurious silk makeup bag with exquisite hand embroidery.",
+    features: ["Pure Silk", "Hand Embroidered", "Premium Quality", "Traditional Craftsmanship"],
     inStock: true,
-    featured: false,
-    rating: 4.7,
-    reviews: 15,
-    materials: ["Reclaimed Oak", "Natural Finish"],
-    dimensions: "18\" x 12\" x 8\"",
-    weight: "12 lbs"
+    rating: 4.9
   },
   {
     id: 4,
-    name: "Hand-painted Canvas Art",
-    description: "Original acrylic painting on canvas featuring vibrant colors and abstract patterns. Each piece is unique and signed by the artist.",
-    price: 599.99,
-    images: [
-      "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=500&h=500&fit=crop",
-      "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=500&h=500&fit=crop&brightness=10"
-    ],
-    category: "Paintings",
-    artist: {
-      id: 4,
-      name: "David Kim",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-    },
-    tags: ["painting", "canvas", "original", "abstract"],
+    name: "Handloom Cotton Makeup Organizer",
+    category: "makeup-bags",
+    price: 32.99,
+    image: "https://images.unsplash.com/photo-1631027671107-b525946be5c2?w=500",
+    description: "Spacious handloom cotton makeup organizer with multiple compartments.",
+    features: ["Handloom Cotton", "Multiple Compartments", "Durable", "Easy to Clean"],
     inStock: true,
-    featured: true,
-    rating: 4.6,
-    reviews: 28,
-    materials: ["Acrylic Paint", "Canvas", "Wooden Frame"],
-    dimensions: "24\" x 18\"",
-    weight: "3 lbs"
+    rating: 4.7
   },
+
+  // Pen Pencil Pouches
   {
     id: 5,
-    name: "Handmade Jewelry Collection",
-    description: "Elegant jewelry collection featuring precious stones and metals. Each piece is carefully crafted with attention to detail.",
-    price: 399.99,
-    originalPrice: 499.99,
-    images: [
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&h=500&fit=crop",
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&h=500&fit=crop&sat=30"
-    ],
-    category: "Jewelry",
-    artist: {
-      id: 5,
-      name: "Elena Vasquez",
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face"
-    },
-    tags: ["jewelry", "handmade", "precious-stones", "elegant"],
+    name: "Handwoven Pen Pencil Case",
+    category: "pen-pencil-pouches",
+    price: 15.99,
+    image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500",
+    description: "Compact handwoven pen pencil case perfect for students and professionals.",
+    features: ["Compact Design", "Durable Material", "Traditional Weaving", "Multiple Colors"],
     inStock: true,
-    featured: false,
-    rating: 4.9,
-    reviews: 67,
-    materials: ["Sterling Silver", "Semi-precious Stones"],
-    dimensions: "Various",
-    weight: "0.5 lbs"
+    rating: 4.5
   },
   {
     id: 6,
-    name: "Traditional Basket Weaving",
-    description: "Authentic woven baskets made using traditional techniques passed down through generations. Perfect for storage or decoration.",
-    price: 189.99,
-    images: [
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=500&fit=crop",
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=500&fit=crop&sepia=20"
-    ],
-    category: "Textiles",
-    artist: {
-      id: 6,
-      name: "Robert Tall Bear",
-      avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&crop=face"
-    },
-    tags: ["basket", "traditional", "handwoven", "functional"],
+    name: "Jute Pencil Pouch with Zipper",
+    category: "pen-pencil-pouches",
+    price: 12.99,
+    image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=500",
+    description: "Eco-friendly jute pencil pouch with secure zipper closure.",
+    features: ["Eco-friendly Jute", "Secure Zipper", "Lightweight", "Sustainable"],
     inStock: true,
-    featured: false,
-    rating: 4.8,
-    reviews: 19,
-    materials: ["Natural Reed", "Cotton Binding"],
-    dimensions: "16\" x 12\" x 8\"",
-    weight: "2 lbs"
+    rating: 4.4
+  },
+
+  // Sarees
+  {
+    id: 7,
+    name: "Handloom Silk Saree",
+    category: "sarees",
+    price: 199.99,
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500",
+    description: "Exquisite handloom silk saree with traditional motifs and rich colors.",
+    features: ["Pure Silk", "Handloom Weaving", "Traditional Motifs", "Rich Colors"],
+    inStock: true,
+    rating: 5.0
+  },
+  {
+    id: 8,
+    name: "Cotton Handloom Saree",
+    category: "sarees",
+    price: 89.99,
+    image: "https://images.unsplash.com/photo-1594736797933-d0c501ba3e65?w=500",
+    description: "Comfortable cotton handloom saree perfect for daily wear.",
+    features: ["100% Cotton", "Breathable", "Comfortable", "Easy Care"],
+    inStock: true,
+    rating: 4.8
+  },
+
+  // Kurtas and Kurtis
+  {
+    id: 9,
+    name: "Handwoven Cotton Kurta",
+    category: "kurtas-kurtis",
+    price: 75.99,
+    image: "https://images.unsplash.com/photo-1571511386780-8b425ae3c9b3?w=500",
+    description: "Elegant handwoven cotton kurta with traditional embroidery.",
+    features: ["Handwoven Cotton", "Traditional Embroidery", "Comfortable Fit", "Breathable"],
+    inStock: true,
+    rating: 4.7
+  },
+  {
+    id: 10,
+    name: "Silk Kurti with Block Print",
+    category: "kurtas-kurtis",
+    price: 95.99,
+    image: "https://images.unsplash.com/photo-1576994020836-b6a996dd2e56?w=500",
+    description: "Beautiful silk kurti featuring intricate block print patterns.",
+    features: ["Pure Silk", "Block Print", "Contemporary Design", "Premium Quality"],
+    inStock: true,
+    rating: 4.9
+  },
+
+  // Fabrics
+  {
+    id: 11,
+    name: "Handloom Cotton Fabric",
+    category: "fabrics",
+    price: 35.99,
+    image: "https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=500",
+    description: "High-quality handloom cotton fabric perfect for various projects.",
+    features: ["100% Cotton", "Handloom Weaving", "Natural Dyes", "Per Meter"],
+    inStock: true,
+    rating: 4.6
+  },
+  {
+    id: 12,
+    name: "Silk Brocade Fabric",
+    category: "fabrics",
+    price: 125.99,
+    image: "https://images.unsplash.com/photo-1566662780271-5c4a2a0a0ade?w=500",
+    description: "Luxurious silk brocade fabric with golden threads.",
+    features: ["Pure Silk", "Brocade Weaving", "Golden Threads", "Premium Quality"],
+    inStock: true,
+    rating: 5.0
+  },
+
+  // Home Furnishings
+  {
+    id: 13,
+    name: "Handwoven Cushion Covers",
+    category: "home-furnishings",
+    price: 29.99,
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500",
+    description: "Beautiful handwoven cushion covers to enhance your home decor.",
+    features: ["Handwoven", "Set of 2", "Machine Washable", "Natural Fibers"],
+    inStock: true,
+    rating: 4.7
+  },
+  {
+    id: 14,
+    name: "Jute Table Runner",
+    category: "home-furnishings",
+    price: 22.99,
+    image: "https://images.unsplash.com/photo-1595515106969-9351e1297bd3?w=500",
+    description: "Elegant jute table runner perfect for dining room decoration.",
+    features: ["Natural Jute", "Elegant Design", "Eco-friendly", "Durable"],
+    inStock: true,
+    rating: 4.5
+  },
+
+  // Sarongs
+  {
+    id: 15,
+    name: "Cotton Block Print Sarong",
+    category: "sarongs",
+    price: 38.99,
+    image: "https://images.unsplash.com/photo-1503656877436-68b7e2b38c47?w=500",
+    description: "Vibrant cotton sarong with traditional block print patterns.",
+    features: ["100% Cotton", "Block Print", "Versatile Use", "Lightweight"],
+    inStock: true,
+    rating: 4.6
+  },
+  {
+    id: 16,
+    name: "Silk Sarong with Embroidery",
+    category: "sarongs",
+    price: 65.99,
+    image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=500",
+    description: "Luxurious silk sarong featuring delicate hand embroidery.",
+    features: ["Pure Silk", "Hand Embroidery", "Luxurious Feel", "Premium Quality"],
+    inStock: true,
+    rating: 4.9
+  },
+
+  // Shawls
+  {
+    id: 17,
+    name: "Pashmina Wool Shawl",
+    category: "shawls",
+    price: 149.99,
+    image: "https://images.unsplash.com/photo-1582201943021-e8e54b4e7bfd?w=500",
+    description: "Luxurious pashmina wool shawl, incredibly soft and warm.",
+    features: ["100% Pashmina Wool", "Ultra Soft", "Warm", "Lightweight"],
+    inStock: true,
+    rating: 5.0
+  },
+  {
+    id: 18,
+    name: "Handwoven Wool Shawl",
+    category: "shawls",
+    price: 89.99,
+    image: "https://images.unsplash.com/photo-1578088342721-15dd76eba0aa?w=500",
+    description: "Traditional handwoven wool shawl with ethnic patterns.",
+    features: ["Handwoven Wool", "Traditional Patterns", "Warm", "Durable"],
+    inStock: true,
+    rating: 4.8
   }
 ];
 
 export const categories = [
-  { id: 1, name: "Paintings", count: 45, image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=200&fit=crop" },
-  { id: 2, name: "Sculptures", count: 23, image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=300&h=200&fit=crop" },
-  { id: 3, name: "Ceramics", count: 67, image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68629?w=300&h=200&fit=crop" },
-  { id: 4, name: "Textiles", count: 34, image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop" },
-  { id: 5, name: "Jewelry", count: 89, image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&h=200&fit=crop" },
-  { id: 6, name: "Wood Work", count: 28, image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=200&fit=crop" }
+  {
+    id: 'cosmetic-bags',
+    name: 'Cosmetic Bags',
+    description: 'Beautiful handcrafted cosmetic bags for your beauty essentials',
+    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500'
+  },
+  {
+    id: 'makeup-bags',
+    name: 'Makeup Bags',
+    description: 'Elegant makeup bags with traditional craftsmanship',
+    image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500'
+  },
+  {
+    id: 'pen-pencil-pouches',
+    name: 'Pen Pencil Pouches',
+    description: 'Practical and stylish pouches for stationery items',
+    image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500'
+  },
+  {
+    id: 'sarees',
+    name: 'Sarees',
+    description: 'Exquisite handloom sarees showcasing traditional artistry',
+    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500'
+  },
+  {
+    id: 'kurtas-kurtis',
+    name: 'Kurtas & Kurtis',
+    description: 'Comfortable and stylish ethnic wear for every occasion',
+    image: 'https://images.unsplash.com/photo-1571511386780-8b425ae3c9b3?w=500'
+  },
+  {
+    id: 'fabrics',
+    name: 'Fabrics',
+    description: 'Premium handloom fabrics for your creative projects',
+    image: 'https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=500'
+  },
+  {
+    id: 'home-furnishings',
+    name: 'Home Furnishings',
+    description: 'Beautiful handcrafted items to enhance your home',
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500'
+  },
+  {
+    id: 'sarongs',
+    name: 'Sarongs',
+    description: 'Versatile and stylish sarongs for beach and casual wear',
+    image: 'https://images.unsplash.com/photo-1503656877436-68b7e2b38c47?w=500'
+  },
+  {
+    id: 'shawls',
+    name: 'Shawls',
+    description: 'Luxurious handwoven shawls for warmth and elegance',
+    image: 'https://images.unsplash.com/photo-1582201943021-e8e54b4e7bfd?w=500'
+  }
 ];
