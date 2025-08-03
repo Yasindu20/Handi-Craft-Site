@@ -70,7 +70,7 @@ const Products = () => {
 
   const handleFilterChange = (key, value) => {
     setFilters(prev => ({ ...prev, [key]: value }));
-    
+
     if (key === 'category') {
       if (value) {
         setSearchParams({ category: value });
@@ -91,7 +91,7 @@ const Products = () => {
   const endIndex = startIndex + PRODUCTS_PER_PAGE;
   const currentProducts = filteredProducts.slice(startIndex, endIndex);
 
-  const activeFiltersCount = Object.values(filters).filter(value => 
+  const activeFiltersCount = Object.values(filters).filter(value =>
     value && value !== 'name' && value !== false
   ).length;
 
@@ -182,7 +182,7 @@ const Products = () => {
                       <X className="h-5 w-5" />
                     </button>
                   </div>
-                  
+
                   {/* Filter content - same as desktop but in mobile overlay */}
                   {activeFiltersCount > 0 && (
                     <button
@@ -392,7 +392,7 @@ const Products = () => {
                   products
                 </p>
               </div>
-              
+
               <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
                 {/* View Mode Toggle - Hidden on mobile */}
                 <div className="hidden md:flex border border-gray-300 rounded-lg overflow-hidden">
@@ -430,11 +430,10 @@ const Products = () => {
             {/* Products Grid */}
             {currentProducts.length > 0 ? (
               <>
-                <div className={`grid gap-4 sm:gap-6 lg:gap-8 ${
-                  viewMode === 'grid' 
-                    ? 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3' 
+                <div className={`grid gap-4 sm:gap-6 lg:gap-8 ${viewMode === 'grid'
+                    ? 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3'
                     : 'grid-cols-1'
-                }`}>
+                  }`}>
                   {currentProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
@@ -442,51 +441,65 @@ const Products = () => {
 
                 {/* Enhanced Mobile-Friendly Pagination */}
                 {totalPages > 1 && (
-                  <div className="flex items-center justify-center mt-8 sm:mt-12">
-                    <div className="flex items-center space-x-1 sm:space-x-2">
-                      <button
-                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                        disabled={currentPage === 1}
-                        className="p-2 sm:p-3 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
-                        aria-label="Previous page"
-                      >
-                        <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
-                      </button>
-                      
-                      <div className="flex items-center space-x-1">
-                        {generatePaginationItems().map((item, index) => {
-                          if (item === '...') {
-                            return (
-                              <span key={`ellipsis-${index}`} className="px-1 sm:px-2 text-gray-500">
-                                ...
-                              </span>
-                            );
-                          }
-                          
-                          return (
-                            <button
-                              key={item}
-                              onClick={() => setCurrentPage(item)}
-                              className={`px-2 py-2 sm:px-3 sm:py-2 min-w-[32px] sm:min-w-[40px] text-sm sm:text-base rounded-lg border transition-colors ${
-                                currentPage === item
-                                  ? 'bg-primary-600 text-white border-primary-600'
-                                  : 'border-gray-300 hover:bg-gray-50'
-                              }`}
-                            >
-                              {item}
-                            </button>
-                          );
-                        })}
+                  <div className="bg-white rounded-xl shadow-md p-6 sm:p-8 mt-12 sm:mt-16 mb-8 sm:mb-12">
+                    <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+                      {/* Page Info */}
+                      <div className="text-sm text-gray-600">
+                        <span className="hidden sm:inline">
+                          Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
+                        </span>
+                        <span className="sm:hidden">
+                          Page {currentPage} of {totalPages}
+                        </span>
                       </div>
-                      
-                      <button
-                        onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                        disabled={currentPage === totalPages}
-                        className="p-2 sm:p-3 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
-                        aria-label="Next page"
-                      >
-                        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
-                      </button>
+
+                      {/* Pagination Controls */}
+                      <div className="flex items-center space-x-2 sm:space-x-3">
+                        <button
+                          onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                          disabled={currentPage === 1}
+                          className="flex items-center space-x-2 px-3 py-2 sm:px-4 sm:py-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors text-sm font-medium"
+                          aria-label="Previous page"
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                          <span className="hidden sm:inline">Previous</span>
+                        </button>
+
+                        <div className="flex items-center space-x-1">
+                          {generatePaginationItems().map((item, index) => {
+                            if (item === '...') {
+                              return (
+                                <span key={`ellipsis-${index}`} className="px-2 py-2 text-gray-500 text-sm">
+                                  ...
+                                </span>
+                              );
+                            }
+
+                            return (
+                              <button
+                                key={item}
+                                onClick={() => setCurrentPage(item)}
+                                className={`px-3 py-2 sm:px-4 sm:py-2 min-w-[40px] text-sm font-medium rounded-lg border transition-all duration-200 ${currentPage === item
+                                    ? 'bg-primary-600 text-white border-primary-600 shadow-md'
+                                    : 'border-gray-300 hover:bg-gray-50 hover:border-gray-400'
+                                  }`}
+                              >
+                                {item}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        <button
+                          onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                          disabled={currentPage === totalPages}
+                          className="flex items-center space-x-2 px-3 py-2 sm:px-4 sm:py-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors text-sm font-medium"
+                          aria-label="Next page"
+                        >
+                          <span className="hidden sm:inline">Next</span>
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
