@@ -7,12 +7,12 @@ const Cart = () => {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 py-16">
+      <div className="min-h-screen bg-gray-50 py-8 sm:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white p-12 rounded-xl shadow-lg">
-            <ShoppingBag className="h-16 w-16 text-gray-400 mx-auto mb-6" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
-            <p className="text-gray-600 mb-8">
+          <div className="bg-white p-8 sm:p-12 rounded-xl shadow-lg">
+            <ShoppingBag className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-4 sm:mb-6" />
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
+            <p className="text-gray-600 mb-6 sm:mb-8">
               Looks like you haven't added any items to your cart yet.
             </p>
             <Link to="/products" className="btn-primary">
@@ -25,37 +25,37 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <Link
             to="/products"
-            className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-4"
+            className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-4 text-sm sm:text-base"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Continue Shopping
           </Link>
-          <h1 className="text-3xl font-bold font-serif text-gray-900">Shopping Cart</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold font-serif text-gray-900">Shopping Cart</h1>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Cart Items */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {items.map((item) => (
-              <div key={item.id} className="bg-white p-6 rounded-xl shadow-md">
-                <div className="flex flex-col sm:flex-row gap-6">
-                  <div className="flex-shrink-0">
+              <div key={item.id} className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                  <div className="flex-shrink-0 mx-auto sm:mx-0">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-full sm:w-24 h-48 sm:h-24 object-cover rounded-lg"
+                      className="w-24 h-24 sm:w-24 sm:h-24 object-cover rounded-lg"
                     />
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
+                      <div className="mb-4 sm:mb-0">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
                           <Link to={`/product/${item.id}`} className="hover:text-primary-600">
                             {item.name}
                           </Link>
@@ -66,7 +66,7 @@ const Cart = () => {
                       </div>
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
+                        className="text-red-500 hover:text-red-700 transition-colors self-end sm:self-start"
                       >
                         <Trash2 className="h-5 w-5" />
                       </button>
@@ -108,7 +108,7 @@ const Cart = () => {
               </div>
             ))}
 
-            <div className="bg-white p-6 rounded-xl shadow-md">
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
               <button
                 onClick={clearCart}
                 className="text-red-600 hover:text-red-700 font-medium transition-colors"
@@ -118,12 +118,12 @@ const Cart = () => {
             </div>
           </div>
 
-          {/* Order Summary */}
+          {/* Order Summary - Sticky on desktop, normal flow on mobile */}
           <div className="lg:col-span-1">
-            <div className="bg-white p-6 rounded-xl shadow-lg sticky top-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg lg:sticky lg:top-8">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Order Summary</h2>
               
-              <div className="space-y-4 mb-6">
+              <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
                   <span className="font-medium">${getCartTotal().toFixed(2)}</span>
@@ -152,7 +152,7 @@ const Cart = () => {
               </div>
 
               {getCartTotal() < 50 && (
-                <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-lg">
                   <p className="text-sm text-amber-800">
                     Add ${(50 - getCartTotal()).toFixed(2)} more to qualify for free shipping!
                   </p>
@@ -163,11 +163,14 @@ const Cart = () => {
                 Proceed to Checkout
               </button>
               
-              <button className="w-full text-primary-600 hover:text-primary-700 font-medium py-3 transition-colors">
+              <Link 
+                to="/products"
+                className="block w-full text-center text-primary-600 hover:text-primary-700 font-medium py-3 transition-colors"
+              >
                 Continue Shopping
-              </button>
+              </Link>
 
-              <div className="mt-6 pt-6 border-t">
+              <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t">
                 <h3 className="font-semibold text-gray-900 mb-3">Secure Checkout</h3>
                 <div className="text-sm text-gray-600 space-y-2">
                   <div className="flex items-center">
