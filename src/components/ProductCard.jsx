@@ -6,7 +6,7 @@ import { useWishlist } from '../context/WishlistContext';
 import { useToast } from '../context/ToastContext';
 import QuickViewModal from './ui/QuickViewModal';
 
-const ProductCard = ({ product, loading = false }) => {
+const ProductCard = ({ product }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showQuickView, setShowQuickView] = useState(false);
   const { addToCart } = useCart();
@@ -51,10 +51,6 @@ const ProductCard = ({ product, loading = false }) => {
     e.stopPropagation();
     setShowQuickView(true);
   };
-
-  if (loading) {
-    return <ProductCardSkeleton />;
-  }
 
   return (
     <>

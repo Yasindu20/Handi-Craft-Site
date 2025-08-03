@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
-import { ProductCardSkeleton } from '../components/ui/Skeleton';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import { products, categories } from '../data/products';
-import { Filter, X, Grid, List, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Filter, Grid, List, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const PRODUCTS_PER_PAGE = 12;
 
@@ -12,7 +11,6 @@ const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState('grid');
   const [filters, setFilters] = useState({
@@ -22,13 +20,7 @@ const Products = () => {
     inStock: false
   });
 
-  // Simulate loading
-  useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
+  // ✅ FIXED: Remove artificial loading delay
   useEffect(() => {
     let filtered = [...products];
 
@@ -286,13 +278,7 @@ const Products = () => {
             </div>
 
             {/* Products Grid */}
-            {loading ? (
-              <div className={`grid gap-8 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
-                {[...Array(PRODUCTS_PER_PAGE)].map((_, index) => (
-                  <ProductCardSkeleton key={index} />
-                ))}
-              </div>
-            ) : currentProducts.length > 0 ? (
+            {currentProducts.length > 0 ? (
               <>
                 <div className={`grid gap-8 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
                   {currentProducts.map((product) => (
@@ -306,7 +292,7 @@ const Products = () => {
                     <button
                       onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                       disabled={currentPage === 1}
-                      className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                      className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
                     >
                       <ChevronLeft className="h-5 w-5" />
                     </button>
@@ -322,7 +308,7 @@ const Products = () => {
                           <button
                             key={page}
                             onClick={() => setCurrentPage(page)}
-                            className={`px-4 py-2 rounded-lg border ${
+                            className={`px-4 py-2 rounded-lg border transition-colors ${
                               currentPage === page
                                 ? 'bg-primary-600 text-white border-primary-600'
                                 : 'border-gray-300 hover:bg-gray-50'
@@ -343,7 +329,7 @@ const Products = () => {
                     <button
                       onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                       disabled={currentPage === totalPages}
-                      className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                      className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
                     >
                       <ChevronRight className="h-5 w-5" />
                     </button>

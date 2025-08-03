@@ -6,14 +6,12 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useRecentlyViewed } from '../context/RecentlyViewedContext';
 import { useToast } from '../context/ToastContext';
-import { ProductDetailSkeleton } from '../components/ui/Skeleton';
 import ProductCard from '../components/ProductCard';
 import Breadcrumb from '../components/ui/Breadcrumb';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
@@ -24,42 +22,28 @@ const ProductDetail = () => {
   const { addToRecentlyViewed } = useRecentlyViewed();
   const { addToast } = useToast();
 
-  // Simulate loading and fetch product
+  // ✅ FIXED: Remove artificial delay, load immediately
   useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      const foundProduct = products.find(p => p.id === parseInt(id));
-      setProduct(foundProduct);
-      if (foundProduct) {
-        addToRecentlyViewed(foundProduct);
-      }
-      setLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
+    const foundProduct = products.find(p => p.id === parseInt(id));
+    setProduct(foundProduct);
+    
+    if (foundProduct) {
+      addToRecentlyViewed(foundProduct);
+      // Reset states when product changes
+      setSelectedImage(0);
+      setQuantity(1);
+      setActiveTab('description');
+      setImageZoomed(false);
+    }
   }, [id, addToRecentlyViewed]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
-            <div className="h-4 bg-gray-200 rounded w-32 mb-4 animate-pulse"></div>
-          </div>
-          <ProductDetailSkeleton />
-        </div>
-      </div>
-    );
-  }
-
+  // Show loading only if product is not found yet
   if (!product) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h2>
-          <Link to="/products" className="btn-primary">
-            Back to Products
-          </Link>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading product...</p>
         </div>
       </div>
     );

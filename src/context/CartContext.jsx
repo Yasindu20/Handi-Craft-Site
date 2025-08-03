@@ -43,12 +43,6 @@ const cartReducer = (state, action) => {
         items: [],
       };
 
-    case 'SET_LOADING':
-      return {
-        ...state,
-        loading: action.payload,
-      };
-
     default:
       return state;
   }
@@ -56,49 +50,28 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { 
-    items: [], 
-    loading: false 
+    items: []
   });
 
-  const setLoading = (loading) => {
-    dispatch({ type: 'SET_LOADING', payload: loading });
-  };
-
+  // ✅ FIXED: Remove artificial loading delays
   const addToCart = (product) => {
-    setLoading(true);
-    // Simulate network delay
-    setTimeout(() => {
-      dispatch({ type: 'ADD_TO_CART', payload: product });
-      setLoading(false);
-    }, 100);
+    dispatch({ type: 'ADD_TO_CART', payload: product });
   };
 
   const removeFromCart = (productId) => {
-    setLoading(true);
-    setTimeout(() => {
-      dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
-      setLoading(false);
-    }, 100);
+    dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
   };
 
   const updateQuantity = (productId, quantity) => {
     if (quantity <= 0) {
       removeFromCart(productId);
     } else {
-      setLoading(true);
-      setTimeout(() => {
-        dispatch({ type: 'UPDATE_QUANTITY', payload: { id: productId, quantity } });
-        setLoading(false);
-      }, 100);
+      dispatch({ type: 'UPDATE_QUANTITY', payload: { id: productId, quantity } });
     }
   };
 
   const clearCart = () => {
-    setLoading(true);
-    setTimeout(() => {
-      dispatch({ type: 'CLEAR_CART' });
-      setLoading(false);
-    }, 100);
+    dispatch({ type: 'CLEAR_CART' });
   };
 
   const getCartTotal = () => {
@@ -116,7 +89,6 @@ export const CartProvider = ({ children }) => {
 
   const value = {
     items: state.items,
-    loading: state.loading,
     addToCart,
     removeFromCart,
     updateQuantity,
