@@ -1,18 +1,33 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
+import { ProductCardSkeleton } from '../components/ui/Skeleton';
+import Breadcrumb from '../components/ui/Breadcrumb';
 import { products, categories } from '../data/products';
-import { Filter, X } from 'lucide-react';
+import { Filter, X, Grid, List, ChevronLeft, ChevronRight } from 'lucide-react';
+
+const PRODUCTS_PER_PAGE = 12;
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [viewMode, setViewMode] = useState('grid');
   const [filters, setFilters] = useState({
     category: searchParams.get('category') || '',
     priceRange: '',
-    sortBy: 'name'
+    sortBy: 'name',
+    inStock: false
   });
+
+  // Simulate loading
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     let filtered = [...products];
@@ -20,6 +35,11 @@ const Products = () => {
     // Filter by category
     if (filters.category) {
       filtered = filtered.filter(product => product.category === filters.category);
+    }
+
+    // Filter by stock status
+    if (filters.inStock) {
+      filtered = filtered.filter(product => product.inStock);
     }
 
     // Filter by price range
@@ -42,6 +62,8 @@ const Products = () => {
           return b.price - a.price;
         case 'rating':
           return b.rating - a.rating;
+        case 'newest':
+          return b.id - a.id;
         case 'name':
         default:
           return a.name.localeCompare(b.name);
@@ -49,6 +71,7 @@ const Products = () => {
     });
 
     setFilteredProducts(filtered);
+    setCurrentPage(1); // Reset to first page when filters change
   }, [filters]);
 
   useEffect(() => {
@@ -61,7 +84,6 @@ const Products = () => {
   const handleFilterChange = (key, value) => {
     setFilters(prev => ({ ...prev, [key]: value }));
     
-    // Update URL if category changes
     if (key === 'category') {
       if (value) {
         setSearchParams({ category: value });
@@ -72,15 +94,38 @@ const Products = () => {
   };
 
   const clearFilters = () => {
-    setFilters({ category: '', priceRange: '', sortBy: 'name' });
+    setFilters({ category: '', priceRange: '', sortBy: 'name', inStock: false });
     setSearchParams({});
   };
 
-  const activeFiltersCount = Object.values(filters).filter(value => value && value !== 'name').length;
+  // Pagination
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+  const endIndex = startIndex + PRODUCTS_PER_PAGE;
+  const currentProducts = filteredProducts.slice(startIndex, endIndex);
+
+  const activeFiltersCount = Object.values(filters).filter(value => 
+    value && value !== 'name' && value !== false
+  ).length;
+
+  // Breadcrumb items
+  const breadcrumbItems = [
+    { label: 'Products', href: '/products' }
+  ];
+
+  if (filters.category) {
+    const categoryName = categories.find(cat => cat.id === filters.category)?.name;
+    if (categoryName) {
+      breadcrumbItems.push({ label: categoryName });
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb */}
+        <Breadcrumb items={breadcrumbItems} />
+
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold font-serif text-gray-900 mb-4">
@@ -98,7 +143,7 @@ const Products = () => {
             <div className="lg:hidden mb-4">
               <button
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className="flex items-center space-x-2 w-full bg-white px-4 py-3 rounded-lg shadow-md border"
+                className="flex items-center space-x-2 w-full bg-white px-4 py-3 rounded-lg shadow-md border hover:shadow-lg transition-shadow"
               >
                 <Filter className="h-5 w-5" />
                 <span>Filters</span>
@@ -111,13 +156,13 @@ const Products = () => {
             </div>
 
             {/* Filter Panel */}
-            <div className={`bg-white p-6 rounded-lg shadow-md ${isFilterOpen ? 'block' : 'hidden lg:block'}`}>
+            <div className={`bg-white p-6 rounded-lg shadow-md sticky top-24 ${isFilterOpen ? 'block' : 'hidden lg:block'}`}>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
                 {activeFiltersCount > 0 && (
                   <button
                     onClick={clearFilters}
-                    className="text-sm text-primary-600 hover:text-primary-700"
+                    className="text-sm text-primary-600 hover:text-primary-700 transition-colors"
                   >
                     Clear All
                   </button>
@@ -128,7 +173,7 @@ const Products = () => {
               <div className="mb-6">
                 <h4 className="font-medium text-gray-900 mb-3">Category</h4>
                 <div className="space-y-2">
-                  <label className="flex items-center">
+                  <label className="flex items-center cursor-pointer">
                     <input
                       type="radio"
                       name="category"
@@ -140,7 +185,7 @@ const Products = () => {
                     <span className="ml-2 text-sm text-gray-700">All Categories</span>
                   </label>
                   {categories.map((category) => (
-                    <label key={category.id} className="flex items-center">
+                    <label key={category.id} className="flex items-center cursor-pointer">
                       <input
                         type="radio"
                         name="category"
@@ -167,7 +212,7 @@ const Products = () => {
                     { label: '$100 - $200', value: '100-200' },
                     { label: 'Over $200', value: '200' }
                   ].map((range) => (
-                    <label key={range.value} className="flex items-center">
+                    <label key={range.value} className="flex items-center cursor-pointer">
                       <input
                         type="radio"
                         name="priceRange"
@@ -181,6 +226,20 @@ const Products = () => {
                   ))}
                 </div>
               </div>
+
+              {/* Availability Filter */}
+              <div className="mb-6">
+                <h4 className="font-medium text-gray-900 mb-3">Availability</h4>
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={filters.inStock}
+                    onChange={(e) => handleFilterChange('inStock', e.target.checked)}
+                    className="text-primary-600 focus:ring-primary-500 rounded"
+                  />
+                  <span className="ml-2 text-sm text-gray-700">In Stock Only</span>
+                </label>
+              </div>
             </div>
           </div>
 
@@ -190,11 +249,27 @@ const Products = () => {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 bg-white p-4 rounded-lg shadow-md">
               <div className="mb-4 sm:mb-0">
                 <p className="text-gray-600">
-                  Showing {filteredProducts.length} of {products.length} products
+                  Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
                 </p>
               </div>
               
               <div className="flex items-center space-x-4">
+                {/* View Mode Toggle */}
+                <div className="hidden sm:flex border border-gray-300 rounded-lg overflow-hidden">
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    className={`p-2 ${viewMode === 'grid' ? 'bg-primary-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                  >
+                    <Grid className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-2 ${viewMode === 'list' ? 'bg-primary-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                  >
+                    <List className="h-4 w-4" />
+                  </button>
+                </div>
+
                 <label className="text-sm text-gray-700">Sort by:</label>
                 <select
                   value={filters.sortBy}
@@ -205,17 +280,76 @@ const Products = () => {
                   <option value="price-low">Price (Low to High)</option>
                   <option value="price-high">Price (High to Low)</option>
                   <option value="rating">Customer Rating</option>
+                  <option value="newest">Newest First</option>
                 </select>
               </div>
             </div>
 
             {/* Products Grid */}
-            {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+            {loading ? (
+              <div className={`grid gap-8 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
+                {[...Array(PRODUCTS_PER_PAGE)].map((_, index) => (
+                  <ProductCardSkeleton key={index} />
                 ))}
               </div>
+            ) : currentProducts.length > 0 ? (
+              <>
+                <div className={`grid gap-8 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
+                  {currentProducts.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="flex items-center justify-center space-x-2 mt-12">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    
+                    {[...Array(totalPages)].map((_, index) => {
+                      const page = index + 1;
+                      if (
+                        page === 1 ||
+                        page === totalPages ||
+                        (page >= currentPage - 2 && page <= currentPage + 2)
+                      ) {
+                        return (
+                          <button
+                            key={page}
+                            onClick={() => setCurrentPage(page)}
+                            className={`px-4 py-2 rounded-lg border ${
+                              currentPage === page
+                                ? 'bg-primary-600 text-white border-primary-600'
+                                : 'border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            {page}
+                          </button>
+                        );
+                      } else if (
+                        page === currentPage - 3 ||
+                        page === currentPage + 3
+                      ) {
+                        return <span key={page} className="px-2">...</span>;
+                      }
+                      return null;
+                    })}
+                    
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={currentPage === totalPages}
+                      className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="text-center py-12">
                 <div className="text-gray-400 mb-4">

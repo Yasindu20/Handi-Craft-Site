@@ -43,32 +43,62 @@ const cartReducer = (state, action) => {
         items: [],
       };
 
+    case 'SET_LOADING':
+      return {
+        ...state,
+        loading: action.payload,
+      };
+
     default:
       return state;
   }
 };
 
 export const CartProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const [state, dispatch] = useReducer(cartReducer, { 
+    items: [], 
+    loading: false 
+  });
+
+  const setLoading = (loading) => {
+    dispatch({ type: 'SET_LOADING', payload: loading });
+  };
 
   const addToCart = (product) => {
-    dispatch({ type: 'ADD_TO_CART', payload: product });
+    setLoading(true);
+    // Simulate network delay
+    setTimeout(() => {
+      dispatch({ type: 'ADD_TO_CART', payload: product });
+      setLoading(false);
+    }, 100);
   };
 
   const removeFromCart = (productId) => {
-    dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
+    setLoading(true);
+    setTimeout(() => {
+      dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
+      setLoading(false);
+    }, 100);
   };
 
   const updateQuantity = (productId, quantity) => {
     if (quantity <= 0) {
       removeFromCart(productId);
     } else {
-      dispatch({ type: 'UPDATE_QUANTITY', payload: { id: productId, quantity } });
+      setLoading(true);
+      setTimeout(() => {
+        dispatch({ type: 'UPDATE_QUANTITY', payload: { id: productId, quantity } });
+        setLoading(false);
+      }, 100);
     }
   };
 
   const clearCart = () => {
-    dispatch({ type: 'CLEAR_CART' });
+    setLoading(true);
+    setTimeout(() => {
+      dispatch({ type: 'CLEAR_CART' });
+      setLoading(false);
+    }, 100);
   };
 
   const getCartTotal = () => {
@@ -79,14 +109,21 @@ export const CartProvider = ({ children }) => {
     return state.items.reduce((total, item) => total + item.quantity, 0);
   };
 
+  const getCartWeight = () => {
+    // Estimate weight for shipping calculation
+    return state.items.reduce((total, item) => total + (item.weight || 0.5) * item.quantity, 0);
+  };
+
   const value = {
     items: state.items,
+    loading: state.loading,
     addToCart,
     removeFromCart,
     updateQuantity,
     clearCart,
     getCartTotal,
     getCartItemsCount,
+    getCartWeight,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
